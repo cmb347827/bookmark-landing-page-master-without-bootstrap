@@ -25,6 +25,10 @@ button{
     transform: translateY(-50%) rotate(-135deg);
     transition: ease 0.5s;
 }
+.accordion-trigger[aria-expanded="false"] .accordion-icon {
+    transform: translateY(-60%) rotate(45deg);
+    transition: ease 0.5s;
+}
 .accordion-item:has(.accordion-trigger[aria-expanded="false"]) .accordion-content {
     display:none;
 }
