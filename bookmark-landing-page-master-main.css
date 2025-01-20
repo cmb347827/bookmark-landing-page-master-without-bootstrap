@@ -421,6 +421,11 @@ body {
     #container .container__fourthchild .accordion-icon:hover, #container .container__fourthchild .accordion-title:hover {
       color: "Alizarin crimson";
       color: #fa5757; }
+    #container .container__fourthchild .accordion-trigger {
+       width: 100%;
+       display:flex;
+       justify-content: space-between;
+      }
     #container .container__fifthchild {
       color: Snow;
       color: white;
