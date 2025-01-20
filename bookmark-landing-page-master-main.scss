@@ -382,7 +382,11 @@ body {
         }   
         
         &__fourthchild{
-           
+           .accordion-trigger{
+               width: 100%;
+               display:flex;
+               justify-content: space-between;
+            }
            .accordion-icon,.accordion-title{
               &:hover{
                 @include font-color(map-get($colors,Soft Red),nth($fallback-colors,2));
