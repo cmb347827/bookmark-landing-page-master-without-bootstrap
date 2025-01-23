@@ -1,0 +1,482 @@
+
+@import '_globals.scss';
+@import '_flexgrid.scss';
+@import '_tabs.scss';
+@import 'accordion.scss';
+@import 'hamburgermenu.scss';
+
+$colors: (
+  Soft Blue: hsl(231, 69%, 60%),
+  Soft Red: hsl(0, 94%, 66%), 
+  Grayish Blue: hsl(229, 8%, 60%),
+  Very Dark Blue: hsl(229, 31%, 21%),
+  White: hsl(0,100%,100%),
+  black: hsl(100,0%,0%),
+);
+
+$fallback-colors: (
+  'Absolute Zero', 'Alizarin crimson',CadetBlue4, NavyBlue, Snow, black
+);
+
+@mixin background($url,$position:auto,$size:auto,$repeat:no-repeat,$fixed:fixed,$color:white){
+    background: url($url) $position/$size $repeat $fixed $color; 
+}
+@mixin font-color($color, $fallback-color) {
+  color: $fallback-color;
+  color: $color;
+}
+
+@mixin bg-color($color, $fallback-color) {
+  background-color: $fallback-color;
+  background-color: $color;
+}
+@mixin border-radius($radius...) {
+  border-radius: $radius;
+}
+@mixin margin($args...) {
+  margin: $args;
+}
+@mixin padding($args...) {
+  padding: $args;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  @include bg-color(map-get($colors,White),nth($fallback-colors,5));
+  @include font-color(map-get($colors,Black),nth($fallback-colors,6));
+  font: {
+     size: $font_size-18;
+     weight: $font_weight-normal;
+	   family: "Rubik", sans-serif;
+  }
+}
+.hidden{
+    display:none;
+}
+.show{
+    display:flex;
+}
+.relativeouter{
+  position: relative;
+}
+.hide-in-mobile{
+  display:none;
+  @media screen and(min-width:768px){
+     display:block;
+  }
+}
+
+
+.shape{
+    width: 70%;
+    height: 70%;
+    position:absolute;
+    @include bg-color(map-get($colors,Soft Blue),nth($fallback-colors,1));     //use extend
+    border-radius: 100px;
+    @media screen and(min-width:768px){
+      width:24em;
+      height: 15em;
+    }
+}
+.shape:before,.shapeSmall:before{
+  content: "";
+  display: block;
+  padding-top: 25%;
+}
+.shapeSmall{
+    width: 26em;
+    height: 13em;
+    position:absolute;
+    @include bg-color(map-get($colors,Soft Blue),nth($fallback-colors,1));     //use extend
+    border-radius: 100px;
+    @media screen and(min-width:768px){
+      width: 18em;
+      height: 12em;
+    }
+}
+
+.top-z-index{
+  //needed for z-index.
+  position: relative;
+  z-index: 1;
+  opacity:1;
+}
+.custom-nav{
+  z-index:99;
+  height:100vh;
+  width: 100vw;
+  opacity:0.8;
+  position:absolute;
+  top:0;
+  left:0;
+  @include bg-color(map-get($colors,Black),nth($fallback-colors,6));
+  a{
+     @include font-color(map-get($colors,White),nth($fallback-colors,5));
+  }
+  #mobilelogo{
+     g path{
+      fill:white;
+    }
+    g g path {
+      fill:black;
+    }
+    g g circle{
+      fill:white;
+    }
+    margin-left:3em;
+  }
+  #menubutton{
+     background-color:black;
+  }
+
+}
+.order{
+    .order-zero{
+        order:0;
+    }
+    .order-one{
+        order:1;
+    }
+    @media screen and(min-width:767px){
+        .order-md-zero{
+           order:0;
+           flex-basis: 25%;
+        }
+        .order-md-one{
+           order: 1;
+           flex-basis: 25%;
+        }
+    }
+}
+
+.text-center{
+   text-align:center;
+}
+.text-start-md{
+    @media screen and(min-width:768px){
+      text-align:left;
+    }
+}
+.text-uppercase{
+   text-transform: uppercase;
+}
+.svg-100{
+   width:100%;
+   height: 100%;
+}
+//from https://gist.github.com/ffoodd/000b59f431e3e64e4ce1a24d5bb36034
+.sr-only {
+	border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important; 
+	-webkit-clip-path: inset(50%) !important;
+		clip-path: inset(50%) !important; 
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important;            
+}
+#container{
+      //cutoff the blue shape on the right/left side
+      display:block;
+
+      @include padding(0.4em);
+      
+      .btn{
+         padding: 5px 15px;
+         border-radius: 5px;
+      }
+      .bluebutton-whitefont{
+        @include font-color(map-get($colors,White),nth($fallback-colors,5));
+        @include bg-color(map-get($colors,Soft Blue),nth($fallback-colors,1));
+      }
+      .red-hover{
+        //on hover the social media logos will become red
+        &:hover{
+          filter:brightness(0) saturate(100%) invert(13%) sepia(100%) saturate(3865%) hue-rotate(348deg) brightness(112%) contrast(93%);
+        }
+      }
+      .gray-font{
+        @include font-color(lighten(map-get($colors,Grayish Blue),7),nth($fallback-colors,3));
+      }
+      .padding-right-md-1em{
+        margin-right: 1em;
+      }
+    
+      .top{
+        top: 15px;
+      }
+      .top-margin{
+        margin-top: 10em;
+        @media screen and(min-width: 768px){
+           margin-top:7em;
+        }
+      }
+      .margin-top-sm-3em{
+         @media screen and(max-width: 767px){
+             margin-top: 3em;
+         }
+      }
+      .center{
+        display:flex;
+        margin: 0 auto;
+      }
+      .gray-bottom-border{
+        @media screen and(max-width:768px){
+           li{
+               border-bottom: 1px solid gainsboro;
+               width: 70%;
+               &:first-of-type{
+                 border-top: 1px solid gainsboro;
+               }
+           }
+        }
+        @media screen and(min-width:768px) {
+           border-bottom: 1px solid gainsboro;
+           border-top:none;
+        }
+      }
+
+      header{
+            ul li{
+              list-style-type:none;
+              width: 100%;
+            } 
+            a{
+              text-decoration:none;
+            }
+            #menubutton{
+               margin: 15px 20px;                                              
+            }
+            #navbarCollapse{
+                hr{
+                   color: white;
+                }
+                li {
+                   padding-bottom:2em;
+                   
+                  a{
+                    font-size: 2rem;
+                    font-weight:$font_weight-medium;
+                    @media screen and(min-width:768px){
+                      font-size: 1em;
+                    }
+                  }
+                }
+                
+                #mobile-header-login{
+                  border:2px solid white;
+                  padding:none;
+                  @include bg-color(map-get($colors,black),nth($fallback-colors,6));
+                  @include font-color(map-get($colors,white),nth($fallback-colors,5));
+                }
+            }
+            @media screen and(min-width:767px){
+                #desktop-header-login{
+                  @include bg-color(map-get($colors,Soft Red),nth($fallback-colors,2));
+                  font-size: 1rem;
+                  @include font-color(map-get($colors,White),nth($fallback-colors,5));
+                  &:hover{
+                      @include bg-color(map-get($colors,White),nth($fallback-colors,5));
+                      @include font-color(map-get($colors,Soft Red),nth($fallback-colors,2));
+                      border: 2px solid red;
+                  }
+                }
+            }
+        
+      }
+      
+      .container{
+        
+        .btnHover{
+            &:hover{
+              @include bg-color(lighten(map-get($colors,Grayish Blue),31),nth($fallback-colors,3));
+              @include font-color(map-get($colors,Soft Blue),nth($fallback-colors,1));
+              border: 2px solid map-get($colors,Soft Blue);
+            }
+        }
+        &__firstchild{
+            @extend .order;
+             
+            @media screen and(max-width: 767px){
+                //in mobile view the hero svg image ,should have max-width /max-height. I did not use viewbox or svg-100
+                #hero{
+                    max-width: 75%;
+                    max-height:75%;
+                }
+            }
+            
+            .transform-right-down{
+              top: 25%;
+              left: 15%;
+              @media screen and(min-width: 768px){
+                top: 35%;
+                left: 40%;
+              }
+            }
+          
+            #getonfirefoxbtn{
+                  @include bg-color(lighten(map-get($colors,Grayish Blue),31),nth($fallback-colors,3));
+                  @include font-color(map-get($colors,Very Dark Blue),nth($fallback-colors,4));
+                  box-shadow: 0 8px 8px -4px lightgrey;
+                  &:hover{
+                    box-shadow:none;
+                    border: 2px solid map-get($colors,Very Dark Blue);
+                  }
+              }
+        }
+        
+        &__secondchild{
+           
+          .transform-left-down{
+            top: 15%;
+            right: 55%;
+            @media screen and(min-width: 768px){
+              top: 20%;
+              right: 65%;
+            }
+          }
+          .custom-font-tabs{
+            @include font-color(lighten(map-get($colors,Grayish Blue),11),nth($fallback-colors,3));
+            &:hover{
+              @include font-color(map-get($colors,Soft Red),nth($fallback-colors,2));
+            }
+            &:focus{
+              @include font-color(map-get($colors,Very Dark Blue),nth($fallback-colors,4));
+              border-bottom: 2px solid red;
+          
+            }
+          }
+        }
+        &__thirdchild{
+          
+           @media screen and(min-width:768px){
+              .top-3em{
+                  position:relative;
+                  top: 3em;
+              }
+              .top-6em{
+                  position:relative;
+                  top: 6em;
+              }
+              .margin-left-2em{
+                margin-left:2em;
+              }
+           }
+           .bottom-dash-border{
+              border-bottom: dashed lightgray;
+           }
+           .boxshadow-bottom{
+              box-shadow: 0 12px 11px 0 lightgray;
+           }
+           
+        }   
+        
+        &__fourthchild{
+            .accordion-trigger{
+               width: 100%;
+               display:flex;
+               justify-content: space-between;
+               &:focus{
+                  .accordion-icon{
+                      @include font-color(map-get($colors,Soft Red),nth($fallback-colors,2));
+                  }
+               }
+            }
+           .accordion-title{
+              &:hover{
+                @include font-color(map-get($colors,Soft Red),nth($fallback-colors,2));
+              }
+           }
+        }
+    
+        &__fifthchild{
+           @include font-color(map-get($colors,White),nth($fallback-colors,5));
+           @include bg-color(map-get($colors,Soft Blue),nth($fallback-colors,1));
+           min-height: 12em;
+           width: 100vw;
+           padding-bottom: 4em;
+           input{
+              min-width: 25em;
+           }
+
+          .move-right-up{
+            //used to move the error icon in position within input.
+            position:relative;
+            margin-left:3em;
+            bottom: 0.7em;
+            @media screen and(min-width:768px){
+               margin-left:0;
+               bottom: 0.5em;
+            }
+          }
+          .invalid-feedback{
+             position:relative;
+             top:-0.5em;
+          }
+         
+          #contact{
+            position:relative;
+            top:1em;
+            min-height: 3em;
+            margin-left: 2em;
+            @include bg-color(map-get($colors,Soft Red),nth($fallback-colors,2));
+            @include font-color(map-get($colors,White),nth($fallback-colors,5));
+            &:hover{
+              @include bg-color(map-get($colors,White),nth($fallback-colors,5));
+              @include font-color(map-get($colors,Soft Red),nth($fallback-colors,2));
+              border: 2px solid red;
+            }
+            @media screen and(min-width:768px){
+              top:0;
+            }
+          }
+        }
+
+        &__sixthchild{
+          overflow:auto;
+          width: 100vw;
+          @include bg-color(map-get($colors,Very Dark Blue),nth($fallback-colors,4));
+          svg path{
+            //whiten the svg logo image text 
+            filter:brightness(0) saturate(100%) invert(93%) sepia(0%) saturate(880%) hue-rotate(150deg) brightness(102%) contrast(104%);
+          }
+          svg{
+            margin-top: 2em;
+            margin-bottom: 2em;
+          }
+          li{
+            list-style:none;
+          }
+          a{
+            @include font-color(darken(map-get($colors,White),8),nth($fallback-colors,5));
+            text-decoration:none;
+          }
+        }
+        
+        @media screen and(min-width: 768px){
+          margin-top: -15%;
+          
+        }
+      }
+      footer{
+        
+        @media screen and(min-width:768px){
+          position:relative;
+          top: 10em;
+        }
+      }
+      @media screen and(min-width:768px){
+        @include padding(4em);
+        font-size:1.2em;
+      }
+}

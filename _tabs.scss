@@ -1,0 +1,13 @@
+
+
+.tabs {
+	display: flex;
+	align-items: stretch;
+}
+
+[role="tabpanel"].is-hidden {
+	display: none;
+}
+[role="tabpanel"] {
+	display: flex;
+}
